@@ -29,7 +29,7 @@ jobs:
           --splash-color "#1A1C1E"
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: AgeCalculator-APK
           path: build/apk/
