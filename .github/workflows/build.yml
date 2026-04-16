@@ -21,12 +21,14 @@ jobs:
         run: pip install flet
 
       - name: Build APK
-        run: |
-          flet build apk \
-          --name "Age Calculator" \
-          --icon icon.png \
-          --splash-image icon.png \
-          --splash-color "#1A1C1E"
+  run: |
+    pip install "flet[all]"
+    flet doctor
+    flet build apk \
+    --name "Age Calculator" \
+    --icon icon.png \
+    --splash-image icon.png \
+    --splash-color "#1A1C1E"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
