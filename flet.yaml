@@ -1,0 +1,9 @@
+# flet.yaml
+app:
+  name: "Age Calculator"
+  package_name: "com.yourname.agecalculator"
+  icon: "icon.png"
+  splash:
+    image: "icon.png"
+    color: "#1A1C1E"
+    
