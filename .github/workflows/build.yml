@@ -28,9 +28,8 @@ jobs:
           pip install "flet[all]"
 
       - name: Build APK
-        run: |
-          # Flet 0.84.0+ automatically picks up settings from flet.yaml
-          flet build apk
+        run: flet build apk --split-per-abi
+        
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
