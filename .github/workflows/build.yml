@@ -22,24 +22,19 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install Flet and Dependencies
+      - name: Install Flet
         run: |
           pip install flet==0.84.0
-          # We need 'flet[all]' to access the build CLI tools
-          pip install "flet[all]" 
+          pip install "flet[all]"
 
       - name: Build APK
         run: |
-          flet build apk \
-            --name "Age Calculator" \
-            --icon icon.png \
-            --splash-image icon.png \
-            --splash-color "#1A1C1E"
+          # Flet 0.84.0+ automatically picks up settings from flet.yaml
+          flet build apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AgeCalculator-APK
-          # Flet builds usually output to the 'build/apk' directory
           path: build/apk/*.apk
           
