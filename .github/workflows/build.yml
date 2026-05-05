@@ -10,28 +10,36 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
-      - name: Install Flet
-        run: pip install flet
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install Flet and Dependencies
+        run: |
+          pip install flet==0.84.0
+          # We need 'flet[all]' to access the build CLI tools
+          pip install "flet[all]" 
 
       - name: Build APK
-  run: |
-    pip install "flet[all]"
-    flet doctor
-    flet build apk \
-    --name "Age Calculator" \
-    --icon icon.png \
-    --splash-image icon.png \
-    --splash-color "#1A1C1E"
+        run: |
+          flet build apk \
+            --name "Age Calculator" \
+            --icon icon.png \
+            --splash-image icon.png \
+            --splash-color "#1A1C1E"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AgeCalculator-APK
-          path: build/apk/
+          # Flet builds usually output to the 'build/apk' directory
+          path: build/apk/*.apk
+          
