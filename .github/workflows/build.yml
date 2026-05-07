@@ -29,18 +29,19 @@ jobs:
 
       - name: Build APK
         run: |
-          # We force the name, org, and icon directly in the command
-          flet build apk \
-            --project "Age Calculator" \
-            --org "com.yourname" \
-            --product "AgeCalculator" \
-            --icon "icon.png" \
-            --split-per-abi
+          # 1. Initialize the project structure so we can modify it
+          flet create tmp_app
+          cp main.py tmp_app/
+          cp icon.png tmp_app/
+          
+          # 2. Run the build from inside that folder
+          # We use --project here because it's the only flag 0.84.0 consistently likes
+          cd tmp_app
+          flet build apk --project "Age Calculator" --split-per-abi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AgeCalculator-APK
-          # Using ** helps find the APKs even if they are in subfolders
-          path: build/apk/**/*.apk
+          path: tmp_app/build/apk/**/*.apk
           
