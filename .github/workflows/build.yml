@@ -28,12 +28,19 @@ jobs:
           pip install "flet[all]"
 
       - name: Build APK
-        run: flet build apk --split-per-abi
-        
+        run: |
+          # We force the name, org, and icon directly in the command
+          flet build apk \
+            --project "Age Calculator" \
+            --org "com.yourname" \
+            --product "AgeCalculator" \
+            --icon "icon.png" \
+            --split-per-abi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AgeCalculator-APK
-          path: build/apk/*.apk
+          # Using ** helps find the APKs even if they are in subfolders
+          path: build/apk/**/*.apk
           
